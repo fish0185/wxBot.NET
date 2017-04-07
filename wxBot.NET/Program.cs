@@ -12,7 +12,7 @@ namespace wxBot.NET
     {
         static void Main(string[] args)
         {
-            TulingWXBot newbot = new TulingWXBot();
+            SimpleWXbot newbot = new SimpleWXbot();
             newbot.run();
         }
     }

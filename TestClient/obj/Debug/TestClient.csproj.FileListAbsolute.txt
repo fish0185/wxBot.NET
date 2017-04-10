@@ -1,0 +1,8 @@
+C:\wechat\wxBot.NET\TestClient\bin\Debug\TestClient.exe.config
+C:\wechat\wxBot.NET\TestClient\bin\Debug\TestClient.exe
+C:\wechat\wxBot.NET\TestClient\bin\Debug\TestClient.pdb
+C:\wechat\wxBot.NET\TestClient\bin\Debug\websocket-sharp.dll
+C:\wechat\wxBot.NET\TestClient\bin\Debug\websocket-sharp.xml
+C:\wechat\wxBot.NET\TestClient\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
+C:\wechat\wxBot.NET\TestClient\obj\Debug\TestClient.exe
+C:\wechat\wxBot.NET\TestClient\obj\Debug\TestClient.pdb

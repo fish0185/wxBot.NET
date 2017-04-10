@@ -1,0 +1,8 @@
+C:\wechat\wxBot.NET\WechatProxy\bin\Debug\WechatProxy.exe.config
+C:\wechat\wxBot.NET\WechatProxy\bin\Debug\WechatProxy.exe
+C:\wechat\wxBot.NET\WechatProxy\bin\Debug\WechatProxy.pdb
+C:\wechat\wxBot.NET\WechatProxy\bin\Debug\websocket-sharp.dll
+C:\wechat\wxBot.NET\WechatProxy\bin\Debug\websocket-sharp.xml
+C:\wechat\wxBot.NET\WechatProxy\obj\Debug\WechatProxy.csprojResolveAssemblyReference.cache
+C:\wechat\wxBot.NET\WechatProxy\obj\Debug\WechatProxy.exe
+C:\wechat\wxBot.NET\WechatProxy\obj\Debug\WechatProxy.pdb

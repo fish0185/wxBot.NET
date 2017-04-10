@@ -8,12 +8,28 @@ using Newtonsoft.Json.Linq;
 
 namespace wxBot.NET
 {
+    using System.Threading;
+
     class Program
     {
         static void Main(string[] args)
         {
-            SimpleWXbot newbot = new SimpleWXbot();
-            newbot.run();
+            var task = Task.Factory.StartNew(
+                    () =>
+                    {
+                        SimpleWXbot newbot = new SimpleWXbot();
+                        newbot.run();
+                    }, TaskCreationOptions.LongRunning);
+
+            Thread.Sleep(20000);
+
+            var task2 = Task.Factory.StartNew(
+                    () =>
+                    {
+                        SimpleWXbot newbot = new SimpleWXbot();
+                        newbot.run();
+                    }, TaskCreationOptions.LongRunning);
+            Console.ReadKey();
         }
     }
 }

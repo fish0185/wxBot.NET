@@ -1,7 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wxBot.NET", "wxBot.NET\wxBot.NET.csproj", "{111C6235-8B2A-4546-84A0-9EF42234BEE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WechatProxy", "WechatProxy\WechatProxy.csproj", "{1DEBE7B0-07DE-4E40-8AA3-9CB915226498}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{D3B0E44B-E44C-4D97-B8E0-07BC56A90A41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{F20EB2E2-9112-432F-9D33-F9DCCED6C076}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +21,18 @@ Global
 		{111C6235-8B2A-4546-84A0-9EF42234BEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{111C6235-8B2A-4546-84A0-9EF42234BEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{111C6235-8B2A-4546-84A0-9EF42234BEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DEBE7B0-07DE-4E40-8AA3-9CB915226498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DEBE7B0-07DE-4E40-8AA3-9CB915226498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DEBE7B0-07DE-4E40-8AA3-9CB915226498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DEBE7B0-07DE-4E40-8AA3-9CB915226498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3B0E44B-E44C-4D97-B8E0-07BC56A90A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3B0E44B-E44C-4D97-B8E0-07BC56A90A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3B0E44B-E44C-4D97-B8E0-07BC56A90A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3B0E44B-E44C-4D97-B8E0-07BC56A90A41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F20EB2E2-9112-432F-9D33-F9DCCED6C076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F20EB2E2-9112-432F-9D33-F9DCCED6C076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F20EB2E2-9112-432F-9D33-F9DCCED6C076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F20EB2E2-9112-432F-9D33-F9DCCED6C076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

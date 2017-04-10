@@ -1,0 +1,5 @@
+C:\wechat\wxBot.NET\Test\bin\Debug\Test.exe.config
+C:\wechat\wxBot.NET\Test\bin\Debug\Test.exe
+C:\wechat\wxBot.NET\Test\bin\Debug\Test.pdb
+C:\wechat\wxBot.NET\Test\obj\Debug\Test.exe
+C:\wechat\wxBot.NET\Test\obj\Debug\Test.pdb

@@ -325,7 +325,7 @@ namespace wxBot.NET
         public bool test_sync_check()
         {
             string retcode = "";
-            sync_host = "webpush." + base_host;
+            sync_host = base_host;
             try
             {
                 retcode = sync_check()[0];
@@ -616,7 +616,7 @@ namespace wxBot.NET
             //: param uid: 联系人id
             // : param gid: 群id，如果为非None获取群中成员头像，如果为None则获取联系人头像
             string url = string.Empty;
-            if(gid is null)
+            if(gid == null)
             {
                 url = base_uri + "webwxgeticon?username=" + uid + "&skey=" + skey;
             }

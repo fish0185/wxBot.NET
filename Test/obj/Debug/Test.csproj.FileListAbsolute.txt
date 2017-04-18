@@ -4,3 +4,9 @@ C:\wechat\proj\wxBot.NET\Test\bin\Debug\Test.pdb
 C:\wechat\proj\wxBot.NET\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
 C:\wechat\proj\wxBot.NET\Test\obj\Debug\Test.exe
 C:\wechat\proj\wxBot.NET\Test\obj\Debug\Test.pdb
+C:\weProj\wxBot.NET\Test\bin\Debug\Test.exe.config
+C:\weProj\wxBot.NET\Test\bin\Debug\Test.exe
+C:\weProj\wxBot.NET\Test\bin\Debug\Test.pdb
+C:\weProj\wxBot.NET\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+C:\weProj\wxBot.NET\Test\obj\Debug\Test.exe
+C:\weProj\wxBot.NET\Test\obj\Debug\Test.pdb

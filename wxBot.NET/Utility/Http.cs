@@ -16,13 +16,15 @@ namespace wxBot.NET
         /// <summary>
         /// 整个Session的cookie
         /// </summary>
-        public static CookieContainer CookiesContainer;
+        public CookieContainer CookiesContainer;
 
-        private static HttpClient HttpClient;
+        private HttpClient HttpClient;
 
-        public static HttpClient GetHttpClient()
+        public HttpClient GetHttpClient()
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls;
+            ServicePointManager.ServerCertificateValidationCallback +=
+                (sender, cert, chain, sslPolicyErrors) => true;
             if (HttpClient != null)
             {
                 return HttpClient;
@@ -44,7 +46,7 @@ namespace wxBot.NET
         /// </summary>
         /// <param name="getUrl"></param>
         /// <returns></returns>
-        public static string WebGet(string getUrl)
+        public string WebGet(string getUrl)
         {
             string strResult = "";
             try
@@ -89,7 +91,7 @@ namespace wxBot.NET
         /// <param name="postUrl"></param>
         /// <param name="strPost"></param>
         /// <returns></returns>
-        public static string WebPost(string postUrl, string strPost)
+        public string WebPost(string postUrl, string strPost)
         {
             string strResult = "";
             try
@@ -141,7 +143,7 @@ namespace wxBot.NET
         /// <param name="postUrl"></param>
         /// <param name="strPost"></param>
         /// <returns></returns>
-        public static string WebPost2(string postUrl, string strPost)
+        public string WebPost2(string postUrl, string strPost)
         {
             string strResult = "";
             try

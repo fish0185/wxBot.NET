@@ -17,9 +17,9 @@ namespace Test
             using (var client = new HttpClient())
             {
                var res = client.GetStringAsync(
-                    "https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=1&uuid=4bL2GHZKxA==&_=1491825899172").Result;
+                    "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172").Result;
                 var re2s = client.GetStringAsync(
-                    "https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=1&uuid=4bL2GHZKxA==&_=1491825899172").Result;
+                    "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172").Result;
             }
             //var r1 =
             //    Get("https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=1&uuid=4bL2GHZKxA==&_=1491825899172");

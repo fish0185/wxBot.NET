@@ -12,8 +12,24 @@ namespace wxBot.NET
     {
         static void Main(string[] args)
         {
-            SimpleWXbot newbot = new SimpleWXbot();
-            newbot.run();
+            var task1 = Task.Factory.StartNew(() =>
+            {
+                SimpleWXbot newbot = new SimpleWXbot();
+                newbot.run();
+            });
+
+            Console.ReadLine();
+
+            var task2 = Task.Factory.StartNew(() =>
+            {
+                SimpleWXbot newbot = new SimpleWXbot();
+                newbot.run();
+            });
+
+            //SimpleWXbot newbot3 = new SimpleWXbot();
+            //newbot3.run();
+
+            Task.WaitAll(task1, task2);
         }
     }
 }

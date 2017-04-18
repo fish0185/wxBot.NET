@@ -29,8 +29,8 @@ namespace wxBot.NET
         private string device_id = "e"+new Random().NextDouble().ToString("f16").Replace(".", string.Empty).Substring(1);     // 'e' + repr(random.random())[2:17]
       
         private string base_request = "";
-        private static Dictionary<string, string> dic_sync_key = new Dictionary<string, string>();
-        private static Dictionary<string, string> dic_my_account = new Dictionary<string, string>();
+        private Dictionary<string, string> dic_sync_key = new Dictionary<string, string>();
+        private Dictionary<string, string> dic_my_account = new Dictionary<string, string>();
         string sync_key_str = "";
         string sync_host="";
     
@@ -41,10 +41,11 @@ namespace wxBot.NET
         private List<Object> special_list = new List<object>();   //特殊号
         private List<Object> group_list = new List<object>();   //群聊
         private List<Object> encry_chat_room_id_list = new List<object>();   //存储群聊的EncryChatRoomId，获取群内成员头像时需要用到
+        private Http _http;
 
         public  wxbot()
         {
-
+            _http = new Http();
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace wxBot.NET
             Console.WriteLine("[INFO] Start to process messages .");            
             //开始处理消息
             proc_msg();
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace wxBot.NET
                          "officialaccounts", "notification_messages", "wxid_novlwrv3lqwv11",
                          "gh_22b87fa7cb3c", "wxitil", "userexperience_alarm", "notification_messages"};
 
-           string contact_str=Http.WebGet(base_uri + "/webwxgetcontact?pass_ticket=" + pass_ticket + "&skey=" + skey + "&r=" + Common.ConvertDateTimeToInt(DateTime.Now));
+           string contact_str= _http.WebGet(base_uri + "/webwxgetcontact?pass_ticket=" + pass_ticket + "&skey=" + skey + "&r=" + Common.ConvertDateTimeToInt(DateTime.Now));
            JObject contact_result=JsonConvert.DeserializeObject(contact_str) as JObject;
            if (contact_result != null)
            {
@@ -169,7 +170,7 @@ namespace wxBot.NET
         public bool get_uuid()
         {
             string url = "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=" + Common.ConvertDateTimeToInt(DateTime.Now);
-            string ReturnValue = Http.WebGet(url);
+            string ReturnValue = _http.WebGet(url);
             Match match = Regex.Match(ReturnValue, "window.QRLogin.code = (\\d+); window.QRLogin.uuid = \"(\\S+?)\"");
             if (match.Success)
             {
@@ -215,7 +216,7 @@ namespace wxBot.NET
             string status_data = null;
             while (retry_time > 0)
             {
-                string login_result = Http.WebGet("https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?" + "tip=" + tip + "&uuid=" + uuid + "&_=" + Common.ConvertDateTimeToInt(DateTime.Now));
+                string login_result = _http.WebGet("https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?" + "tip=" + tip + "&uuid=" + uuid + "&_=" + Common.ConvertDateTimeToInt(DateTime.Now));
                 Match match = Regex.Match(login_result, "window.code=(\\d+)");
                 if (match.Success)
                 {
@@ -265,7 +266,7 @@ namespace wxBot.NET
                 Console.WriteLine("[ERROR] Login failed due to network problem, please try again.");
                 return false;
             }
-            string SessionInfo=Http.WebGet(redirect_uri);
+            string SessionInfo= _http.WebGet(redirect_uri);
             pass_ticket = SessionInfo.Split(new string[] { "pass_ticket" }, StringSplitOptions.None)[1].TrimStart('>').TrimEnd('<', '/');
             skey = SessionInfo.Split(new string[] { "skey" }, StringSplitOptions.None)[1].TrimStart('>').TrimEnd('<', '/');
             sid = SessionInfo.Split(new string[] { "wxsid" }, StringSplitOptions.None)[1].TrimStart('>').TrimEnd('<', '/');
@@ -284,7 +285,7 @@ namespace wxBot.NET
         /// <returns></returns>
         public bool init()
         {
-            string ReturnValue = Http.WebPost(base_uri + "/webwxinit?r=" + Common.ConvertDateTimeToInt(DateTime.Now) + "&lang=en_US" + "&pass_ticket=" + pass_ticket, base_request);
+            string ReturnValue = _http.WebPost(base_uri + "/webwxinit?r=" + Common.ConvertDateTimeToInt(DateTime.Now) + "&lang=en_US" + "&pass_ticket=" + pass_ticket, base_request);
             JObject init_result = JsonConvert.DeserializeObject(ReturnValue) as JObject;
             _me = new wxUser();
             _me.UserName = init_result["User"]["UserName"].ToString();
@@ -314,7 +315,7 @@ namespace wxBot.NET
         /// <returns></returns>
         public void status_notify()
         {
-            string ReturnValue = Http.WebGet(base_uri + "/webwxstatusnotify?lang=zh_CN&pass_ticket=" + pass_ticket);
+            string ReturnValue = _http.WebGet(base_uri + "/webwxstatusnotify?lang=zh_CN&pass_ticket=" + pass_ticket);
            
             //return init_result["BaseResponse"]["Ret"].ToString() == "0";
         }
@@ -325,7 +326,8 @@ namespace wxBot.NET
         public bool test_sync_check()
         {
             string retcode = "";
-            sync_host = base_host;
+            //sync_host = base_host;
+            sync_host = "web.wechat.com";
             try
             {
                 retcode = sync_check()[0];
@@ -336,7 +338,8 @@ namespace wxBot.NET
             }
             if (retcode == "0") return true;
             //sync_host = "webpush." + base_host;
-            sync_host = "webpush2." + base_host;
+            //sync_host = "webpush2." + base_host;
+
             try
             {
                 retcode = sync_check()[0];
@@ -362,7 +365,7 @@ namespace wxBot.NET
            _synccheck_url = string.Format(_synccheck_url, sync_host, sid, uin, sync_key_str, (long)(DateTime.Now.ToUniversalTime() - new System.DateTime(1970, 1, 1)).TotalMilliseconds, skey.Replace("@", "%40"), device_id, Common.ConvertDateTimeToInt(DateTime.Now));
            try
            {
-               string ReturnValue = Http.WebGet(_synccheck_url);
+               string ReturnValue = _http.WebGet(_synccheck_url);
                Match match = Regex.Match(ReturnValue, "window.synccheck=\\{retcode:\"(\\d+)\",selector:\"(\\d+)\"\\}");
                if (match.Success)
                {
@@ -391,7 +394,7 @@ namespace wxBot.NET
 
            if (sid != null && uin != null)
            {
-               string sync_str = Http.WebPost(base_uri + "/webwxsync?sid=" + sid + "&lang=zh_CN&skey=" + skey + "&pass_ticket=" + pass_ticket, sync_json);
+               string sync_str = _http.WebPost(base_uri + "/webwxsync?sid=" + sid + "&lang=zh_CN&skey=" + skey + "&pass_ticket=" + pass_ticket, sync_json);
                
 
                JObject sync_resul = JsonConvert.DeserializeObject(sync_str) as JObject;
@@ -677,7 +680,7 @@ namespace wxBot.NET
             _message.BaseRequest = BaseRequest;
 
             string jsonStr = JsonConvert.SerializeObject(_message);
-            string ReturnVal=Http.WebPost2(url, jsonStr);
+            string ReturnVal= _http.WebPost2(url, jsonStr);
             JObject jReturn=JsonConvert.DeserializeObject(ReturnVal) as JObject;
             return jReturn ["BaseResponse"]["Ret"].ToString() == "0";
           

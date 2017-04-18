@@ -26,12 +26,14 @@ namespace wxBot.NET
                 {
                     Console.WriteLine("[INFO] tuling_key:" + tuling_key);
                 }
+                _http = new Http();
             }
             catch
             {
             }
         }
 
+        private Http _http;
 
         public string tuling_auto_reply(string uid, wxMsg msg)
         {
@@ -40,7 +42,7 @@ namespace wxBot.NET
                 string url = "http://www.tuling123.com/openapi/api";
                 string user_id = uid.Replace("@", "").Substring(0, 30);
                 string data = "key=" + tuling_key + "&info=" + msg.Content + "&userid=" + user_id;
-                string r = Http.WebPost(url, data);
+                string r = _http.WebPost(url, data);
                 JObject result = JsonConvert.DeserializeObject(r) as JObject;
                 string rr = "";
                 if (result["code"].ToString() == "100000")

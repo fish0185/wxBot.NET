@@ -13,13 +13,6 @@ namespace wxBot.NET
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine(System.Net.ServicePointManager.SecurityProtocol.ToString());
-            //ServicePointManager.DefaultConnectionLimit = 65000;
-            //ServicePointManager.MaxServicePoints = 10;
-            ////ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-            ////Console.WriteLine(System.Net.ServicePointManager.SecurityProtocol.ToString());
-            //ServicePointManager.ServerCertificateValidationCallback +=
-            //    (sender, cert, chain, sslPolicyErrors) => true;
             var task1 = Task.Factory.StartNew(() =>
             {
                 SimpleWXbot newbot = new SimpleWXbot();

@@ -14,17 +14,27 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            using (var client = new HttpClient())
+            //using (var client = new HttpClient())
+            //{
+            //   var res = client.GetStringAsync(
+            //        "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172").Result;
+            //    var re2s = client.GetStringAsync(
+            //        "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172").Result;
+            //}
+            Task.Factory.StartNew(() =>
             {
-               var res = client.GetStringAsync(
-                    "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172").Result;
-                var re2s = client.GetStringAsync(
-                    "https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172").Result;
-            }
-            //var r1 =
-            //    Get("https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?tip=1&uuid=4bL2GHZKxA==&_=1491825899172");
-            //var r2 =
-            //    Get("https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491739754587");
+                var r1 =
+                    Get("https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172");
+                Console.WriteLine(r1);
+            });
+
+            Task.Factory.StartNew(() =>
+            {
+                var r1 =
+                    Get("https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&fun=new&lang=zh_CN&_=1491825899172");
+                Console.WriteLine(r1);
+            });
+            Console.ReadLine();
         }
 
         public static string Get(string url)
@@ -36,7 +46,7 @@ namespace Test
                 request.Method = "GET";
                 request.CookieContainer = new CookieContainer();
                 request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36";
-                request.KeepAlive = false;
+                request.KeepAlive = true;
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 Stream stream = response.GetResponseStream();

@@ -80,7 +80,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="cer\FiddlerRoot.cer" />
-    <None Include="wxBot.NET_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="img\QRcode.png">

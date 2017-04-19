@@ -79,6 +79,7 @@
     <None Include="Config\conf.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="cer\FiddlerRoot.cer" />
     <None Include="wxBot.NET_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -87,9 +88,7 @@
     </Content>
     <Content Include="Libs\Gma.QrCodeNet.Encoding.Net35.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="pdx\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

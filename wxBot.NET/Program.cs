@@ -36,6 +36,7 @@ namespace wxBot.NET
 
             Console.ReadLine();
 
+
             var task3 = Task.Factory.StartNew(() =>
             {
                 SimpleWXbot newbot = new SimpleWXbot();

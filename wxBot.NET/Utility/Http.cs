@@ -35,15 +35,16 @@ namespace wxBot.NET
             {
                 CookiesContainer = new CookieContainer();
             }
-            
+
             var handler = new HttpClientHandler
             {
                 CookieContainer = CookiesContainer,
+                ClientCertificateOptions = ClientCertificateOption.Automatic
             };
-           
+
             HttpClient = new HttpClient(handler);
             return HttpClient;
-       }
+        }
 
         /// <summary>
         /// Session带Cookie的HTTPGET
@@ -53,32 +54,39 @@ namespace wxBot.NET
         public string WebGet(string getUrl)
         {
             string strResult = "";
-            
             try
             {
-                
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(getUrl);
+                var client = GetHttpClient();
+
+                //var content = new FormUrlEncodedContent(new[]
+                //{
+                //    new KeyValuePair<string, string>("foo", "bar"),
+                //    new KeyValuePair<string, string>("baz", "bazinga"),
+                //});
+                //cookieContainer.Add(baseAddress, new Cookie("CookieName", "cookie_value"));
+                var result = client.GetStreamAsync(getUrl).Result;
+                var streamReader = new StreamReader(result, Encoding.UTF8);
+                var content = streamReader.ReadToEnd();
+                return content;
+
+
+
                 //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(getUrl);
-                request.Method = "GET";
-                request.KeepAlive = true;
-                X509Certificate2Collection certificates = new X509Certificate2Collection();
-                certificates.Import(@"C:\cer\FiddlerRoot.cer", "", X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-                request.ClientCertificates = certificates;
-                if (CookiesContainer == null)
-                {
-                    CookiesContainer = new CookieContainer();
-                }
-                request.CookieContainer = CookiesContainer;  //启用cookie
-                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                strResult = reader.ReadToEnd();
-                response.Close();
+                //request.Method = "GET";
+                //if (CookiesContainer == null)
+                //{
+                //    CookiesContainer = new CookieContainer();
+                //}
+                //request.CookieContainer = CookiesContainer;  //启用cookie
+                //request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
+                //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //Stream stream = response.GetResponseStream();
+                //StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                //strResult = reader.ReadToEnd();
+                //response.Close();
             }
             catch (Exception ex)
             {
-                //request.Abort();
             }
             return strResult;
         }
@@ -93,13 +101,20 @@ namespace wxBot.NET
             string strResult = "";
             try
             {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(postUrl);
-                X509Certificate2Collection certificates = new X509Certificate2Collection();
-                certificates.Import(@"C:\cer\FiddlerRoot.cer", "", X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-                request.ClientCertificates = certificates;
-                Encoding encoding = Encoding.UTF8;
-                //encoding.GetBytes(postData);
+                var client = GetHttpClient();
                 byte[] bs = Encoding.UTF8.GetBytes(strPost);
+                var content = new ByteArrayContent(bs);
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+
+
+                var xx = client.PostAsync(postUrl, content).Result;
+
+                var res = xx.Content.ReadAsStringAsync().Result;
+                return res;
+                //Encoding encoding = Encoding.UTF8;
+                ////encoding.GetBytes(postData);
+                //byte[] bs = Encoding.UTF8.GetBytes(strPost);
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(postUrl);
                 string responseData = String.Empty;
                 request.Method = "POST";
                 request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -13,6 +14,9 @@ namespace wxBot.NET
     {
         static void Main(string[] args)
         {
+            var fileInfo = new FileInfo(@"C:\Users\Gary\Desktop\SJBZ5400.png");
+            var fileLen = fileInfo.Length;
+
             var task1 = Task.Factory.StartNew(() =>
             {
                 SimpleWXbot newbot = new SimpleWXbot();

@@ -8,6 +8,9 @@ using System.Drawing;
 using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
+using System.Security.Cryptography;
+using System.Web;
 
 namespace wxBot.NET
 {
@@ -650,13 +653,113 @@ namespace wxBot.NET
             return "";
         }
 
-        
-         public bool  send_msg_by_uid(string word,string  dst="filehelper")
+        public class imgMessage
+        {
+            public csMSGImg Msg { get; set; }
+            public csBaseRequest BaseRequest { get; set; }
+        }
+
+        public class csMSGImg
+        {
+            public int Type { get; set; }
+            public string MediaId { get; set; }
+            public string FromUserName { get; set; }
+            public string ToUserName { get; set; }
+            public string LocalID { get; set; }
+            public string ClientMsgId { get; set; }
+        }
+
+        protected string GetMD5HashFromFile(string fileName)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(fileName))
+                {
+                    return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
+                }
+            }
+        }
+
+        public class ImageFile
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+            public string type { get; set; }
+            public string lastModifiedDate { get; set; }
+            public string size { get; set; }
+            public string mediatype => "pic";
+            public string webwx_data_ticket { get; set; }
+            public string pass_ticket { get; set; }
+            public string filename { get; set; }
+            public UploadMediaRequest uploadmediarequest { get; set; }
+        }
+
+        public class UploadMediaRequest
+        {
+          //  public int UploadType { get; set; }
+            public csBaseRequest BaseRequest { get; set; }
+            public long ClientMediaId { get; set; }
+            public int TotalLen { get; set; }
+            public int StartPos { get; set; }
+            public int DataLen { get; set; }
+            public int MediaType { get; set; }
+            //public string FromUserName { get; set; }
+          //  public string ToUserName { get; set; }
+           // public string FileMd5 { get; set; }
+        }
+
+        private string uploadMedia(string filePath, string baseUrl, string from, string to)
+        {
+            var url_1 = "https://file." + baseUrl + "/cgi-bin/mmwebwx-bin/webwxuploadmedia?f=json";
+            var url_2 = "https://file2." + baseUrl + "/cgi-bin/mmwebwx-bin/webwxuploadmedia?f=json";
+            var bytes = Encoding.UTF8.GetBytes("hi i am good");
+
+            csBaseRequest BaseRequest = new csBaseRequest();
+            BaseRequest.Uin = uin;
+            BaseRequest.Sid = sid;
+            BaseRequest.Skey = skey;
+            BaseRequest.DeviceID = device_id;
+            TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+            long timestamp = (long)t.TotalMilliseconds;
+
+            var uploadmediarequest = new UploadMediaRequest
+            {
+                BaseRequest = BaseRequest,
+                //UploadType = 2,
+                TotalLen = 28547,
+                StartPos = 0,
+                DataLen = 28547,
+                MediaType = 4,
+               // FileMd5 = GetMD5HashFromFile(filePath).ToLower(),
+                ClientMediaId = timestamp,
+                //FromUserName = from,
+                //ToUserName = to
+            };
+
+          
+            var uploadmediarequestJSON = JsonConvert.SerializeObject(uploadmediarequest);
+            var pass = HttpUtility.UrlDecode(pass_ticket);
+            //_http.WebOption( url_1);
+            _http.Upload(filePath, pass, uploadmediarequestJSON, url_1);
+
+            //var fileInfo = new FileInfo(filePath);
+            //var fileLen = fileInfo.Length;
+            //var lastModifiedDate = fileInfo.LastWriteTime;
+            //var fileType = "image/png";
+            //var fileName = fileInfo.Name;
+            //var id = "WU_FILE_0";
+            //var passTicket = "undefined";
+            return "Ok";
+        }
+
+
+        public bool  send_msg_by_uid(string word,string  dst="filehelper")
          {
              //dst = get_user_id(dst);
            string url = base_uri + "/webwxsendmsg?pass_ticket="+pass_ticket;
-
-           message _message = new message();
+             uploadMedia(@"C:\Users\Gary\Desktop\SJBZ5400.png", base_host, _me.UserName, dst);
+            
+            message _message = new message();
            csMSG MSG = new csMSG();
            MSG.Type = 1;
            MSG.FromUserName = _me.UserName;
